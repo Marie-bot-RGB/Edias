@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eldia Chronicles - Serveur SNK Roleplay Officiel</title>
+    <meta name="description" content="Serveur Discord roleplay SNK francophone officiel. Rejoignez l'aventure dans l'univers de l'Attaque des Titans !">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-color: #ff6b35;
+            --secondary-color: #ffd700;
+            --dark-bg: #0a0f1c;
+            --card-bg: rgba(16, 25, 47, 0.9);
+            --text-primary: #ffffff;
+            --text-secondary: #b0b8c8;
+            --accent-gradient: linear-gradient(135deg, #ff6b35 0%, #f7931e 50%, #ffd700 100%);
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: rgba(10, 15, 28, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 107, 53, 0.2);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-gradient);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255,107,53,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255,215,0,0.15) 0%, transparent 50%),
+                linear-gradient(135deg, #0a0f1c 0%, #16213e 100%);
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(255,107,53,0.1);
+            border: 1px solid rgba(255,107,53,0.3);
+            border-radius: 50px;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+        
+        .hero-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 50px rgba(255,107,53,0.3);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+        
+        .cta-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: var(--accent-gradient);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255,107,53,0.3);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(255,107,53,0.4);
+        }
+        
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: transparent;
+            color: var(--text-primary);
+            text-decoration: none;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--primary-color);
+            background: rgba(255,107,53,0.1);
+        }
+        
+        /* About Section */
+        .about {
+            padding: 8rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+        
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .about-text {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+        
+        .about-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        
+        .about-features li {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+        
+        .about-features .icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        .about-visual {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            border: 1px solid rgba(255,107,53,0.2);
+            backdrop-filter: blur(20px);
+        }
+        
+        .visual-icon {
+            font-size: 5rem;
+            margin-bottom: 2rem;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 8rem 2rem;
+            background: linear-gradient(135deg, rgba(255,107,53,0.05) 0%, rgba(255,215,0,0.05) 100%);
+        }
+        
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+        
+        .feature-card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255,107,53,0.2);
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent-gradient);
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+        }
+        
+        .feature-card:hover::before {
+            transform: translateX(0);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255,107,53,0.4);
+            box-shadow: 0 20px 40px rgba(255,107,53,0.2);
+        }
+        
+        .feature-icon {
+            width: 4rem;
+            height: 4rem;
+            background: var(--accent-gradient);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        
+        .feature-description {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        
+        /* Join Section */
+        .join {
+            padding: 8rem 2rem;
+            text-align: center;
+            background: var(--dark-bg);
+        }
+        
+        .join-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .join-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .join-description {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+        
+        .discord-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.2rem 3rem;
+            background: #5865F2;
+            color: white;
+            text-decoration: none;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(88,101,242,0.3);
+        }
+        
+        .discord-button:hover {
+            background: #4752C4;
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(88,101,242,0.4);
+        }
+        
+        .discord-icon {
+            width: 24px;
+            height: 24px;
+        }
+        
+        /* Footer */
+        .footer {
+            padding: 3rem 2rem;
+            background: rgba(10, 15, 28, 0.95);
+            border-top: 1px solid rgba(255,107,53,0.2);
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-text {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-gradient);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">Eldia Chronicles</div>
+            <ul class="nav-links">
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#a-propos">À Propos</a></li>
+                <li><a href="#fonctionnalites">Fonctionnalités</a></li>
+                <li><a href="#rejoindre">Rejoindre</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="accueil" class="hero">
+        <div class="hero-content fade-in-up">
+            <div class="hero-badge">🏛️ Serveur Officiel</div>
+            <h1 class="hero-title">Eldia Chronicles</h1>
+            <p class="hero-subtitle">Le serveur roleplay SNK francophone de référence</p>
+            <div class="cta-group">
+                <a href="https://discord.gg/v3xda6Z3fd" class="btn-primary">
+                    <svg class="discord-icon" viewBox="0 0 127.14 96.36" fill="currentColor">
+                        <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/>
+                    </svg>
+                    Rejoindre Discord
+                </a>
+                <a href="#a-propos" class="btn-secondary">
+                    📖 En savoir plus
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="a-propos" class="about">
+        <div class="section-header fade-in-up">
+            <h2 class="section-title">À Propos de Eldia Chronicles</h2>
+            <p class="section-subtitle">Plongez dans l'univers impitoyable de l'Attaque des Titans et forgez votre propre légende</p>
+        </div>
+        
+        <div class="about-content">
+            <div class="about-text-content fade-in-up">
+                <p class="about-text">
+                    Eldia Chronicles est le serveur Discord roleplay francophone de référence basé sur l'univers de Shingeki no Kyojin (l'Attaque des Titans). Notre communauté passionnée vous invite à créer votre propre histoire dans ce monde où l'humanité lutte pour sa survie.
+                </p>
+                
+                <ul class="about-features">
+                    <li>
+                        <div class="icon">🏛️</div>
+                        <span>Univers fidèle à l'œuvre d'Hajime Isayama</span>
+                    </li>
+                    <li>
+                        <div class="icon">👥</div>
+                        <span>Communauté francophone active et bienveillante</span>
+                    </li>
+                    <li>
+                        <div class="icon">⚔️</div>
+                        <span>Roleplay immersif et quêtes épiques</span>
+                    </li>
+                    <li>
+                        <div class="icon">🎭</div>
+                        <span>Liberté créative dans la création de personnage</span>
+                    </li>
+                </ul>
+                
+                <a href="#fonctionnalites" class="btn-secondary">Découvrir les fonctionnalités</a>
+            </div>
+            
+            <div class="about-visual fade-in-up">
+                <div class="visual-icon">🏰</div>
+                <h3>Un monde à explorer</h3>
+                <p>De l'enceinte de Maria aux territoires inexplorés, chaque région regorge de mystères et de dangers à découvrir.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="fonctionnalites" class="features">
+        <div class="features-container">
+            <div class="section-header fade-in-up">
+                <h2 class="section-title">Fonctionnalités du Serveur</h2>
+                <p class="section-subtitle">Découvrez tout ce que Eldia Chronicles a à vous offrir pour une expérience roleplay unique</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card fade-in-up">
+                    <div class="feature-icon">⚔️</div>
+                    <h3 class="feature-title">Missions & Expéditions</h3>
+                    <p class="feature-description">Participez à des expéditions au-delà des murs, explorez des territoires inconnus et affrontez les titans dans des missions palpitantes conçues par notre équipe.</p>
+                </div>
+                
+                <div class="feature-card fade-in-up">
+                    <div class="feature-icon">🏛️</div>
+                    <h3 class="feature-title">Factions Militaires</h3>
+                    <p class="feature-description">Rejoignez le Bataillon d'Exploration, la Garnison, la Police Militaire ou les Guerriers de Marley. Chaque faction offre des opportunités uniques.</p>
+                </div>
+                
+                <div class="feature-card fade-in-up">
+                    <div class="feature-icon">👤</div>
+                    <h3 class="feature-title">Création de Personnage</h3>
+                    <p class="feature-description">Créez un personnage unique avec un background détaillé, des motivations profondes et une histoire personnelle qui s'intègre dans l'univers SNK.</p>
+                </div>
+                
+                <div class="feature-card fade-in-up">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">Système de Progression</h3>
+                    <p class="feature-description">Évoluez dans la hiérarchie militaire, développez vos compétences au combat et débloquez de nouvelles capacités selon vos actions RP.</p>
+                </div>
+                
+                <div class="feature-card fade-in-up">
+                    <div class="feature-icon">🌍</div>
+                    <h3 class="feature-title">Monde Immersif</h3>
+                    <p class="feature-description">Explorez un monde détaillé avec des lieux iconiques : Shiganshina, Trost, la Capitale, Marley et bien d'autres locations authentiques.</p>
+                </div>
+                
+                <div class="feature-card fade-in-up">
+                    <div class="feature-icon">👥</div>
+                    <h3 class="feature-title">Communauté Active</h3>
+                    <p class="feature-description">Rejoignez une communauté passionnée de fans de SNK, participez à des discussions, des théories et créez des liens durables.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Join Section -->
+    <section id="rejoindre" class="join">
+        <div class="join-container fade-in-up">
+            <h2 class="join-title">Prêt à Franchir les Murs ?</h2>
+            <p class="join-description">
+                L'humanité a besoin de soldats courageux pour affronter la menace des titans. 
+                Votre histoire commence maintenant. Rejoignez Eldia Chronicles et devenez une légende !
+            </p>
+            <a href="https://discord.gg/v3xda6Z3fd" class="discord-button">
+                <svg class="discord-icon" viewBox="0 0 127.14 96.36" fill="currentColor">
+                    <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/>
+                </svg>
+                Rejoindre le Serveur Discord
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">Eldia Chronicles</div>
+            <p class="footer-text">Serveur Discord roleplay SNK francophone officiel</p>
+            <div class="footer-links">
+                <a href="https://discord.gg/v3xda6Z3fdy">Discord</a>
+                <a href="#a-propos">À Propos</a>
+                <a href="#fonctionnalites">Fonctionnalités</a>
+                <a href="mailto:anonyme.hack.0001@gmail.com">Contact</a>
+            </div>
+            <p class="footer-text">&copy; 2025 Titans Legacy. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(10, 15, 28, 0.98)';
+                navbar.style.backdropFilter = 'blur(30px)';
+            } else {
+                navbar.style.background = 'rgba(10, 15, 28, 0.95)';
+                navbar.style.backdropFilter = 'blur(20px)';
+            }
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in-up elements
+        document.querySelectorAll('.fade-in-up').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            observer.observe(el);
+        });
+
+        // Mobile menu toggle (for future implementation)
+        const createMobileMenu = () => {
+            const navbar = document.querySelector('.nav-container');
+            const menuButton = document.createElement('button');
+            menuButton.innerHTML = '☰';
+            menuButton.className = 'mobile-menu-btn';
+            menuButton.style.cssText = `
+                display: none;
+                background: none;
+                border: none;
+                color: white;
+                font-size: 1.5rem;
+                cursor: pointer;
+            `;
+            
+            if (window.innerWidth <= 768) {
+                menuButton.style.display = 'block';
+                navbar.appendChild(menuButton);
+            }
+        };
+
+        // Initialize mobile menu on load and resize
+        window.addEventListener('load', createMobileMenu);
+        window.addEventListener('resize', createMobileMenu);
+
+        // Add loading animation
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '1';
+        });
+
+        // Set initial body opacity for loading effect
+        document.body.style.opacity = '0';
+        document.body.style.transition = 'opacity 0.5s ease';
+    </script>
+</body>
+</html>
